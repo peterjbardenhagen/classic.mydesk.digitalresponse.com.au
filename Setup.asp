@@ -345,6 +345,11 @@ End If
         <h1>3A Lighting Setup</h1>
         <p class="subtitle">Initialize database and user accounts</p>
 
+        <div style="background: #e8f4f8; border-left: 3px solid #0099cc; padding: 12px; margin-bottom: 20px; border-radius: 2px;">
+            <strong>Database Path:</strong><br>
+            <code style="word-break: break-all;"><%= strDBPath %></code>
+        </div>
+
         <% If strMessage <> "" Then %>
         <div class="message <% If bolSuccess Then %>success<% Else %>error<% End If %>">
             <%= strMessage %>

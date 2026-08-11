@@ -2,6 +2,8 @@
 ' Database Connection Include File
 ' Opens connection to Access database for 3A Lighting application
 
+<!--#include virtual="/System/ssi_ErrorLog.inc"-->
+
 Dim dbConn, strDBPath
 
 ' Set database path - configure this for your deployment
@@ -18,9 +20,12 @@ On Error Resume Next
 dbConn.Open strConnStr
 
 If Err.Number <> 0 Then
+    LogError "Database Connection Error", "Failed to open database: " & strDBPath, Err.Description
+
     Response.Write "<p style='color:red;'><strong>ERROR: Database connection failed.</strong><br>"
     Response.Write "Path: " & strDBPath & "<br>"
-    Response.Write "Error: " & Err.Description & "</p>"
+    Response.Write "Error: " & Err.Description & "<br>"
+    Response.Write "Check /logs directory for error details.</p>"
     Err.Clear
 End If
 

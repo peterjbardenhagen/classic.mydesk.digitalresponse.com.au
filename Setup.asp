@@ -25,6 +25,7 @@ strSetupPassword = "setup123" ' Change this to a secure password
 
 %>
 <!--#include virtual="/System/ssi_Functions.asp"-->
+<!--#include virtual="/System/ssi_ErrorLog.inc"-->
 <!--#include virtual="/System/ssi_dbConn_open.inc"-->
 <%
 

@@ -5,7 +5,7 @@
 Dim dbConn, strDBPath
 
 ' Set database path - configure this for your deployment
-strDBPath = Server.MapPath("/data/3a-lighting.mdb")
+strDBPath = "c:\database\3a-lighting.mdb"
 
 ' Create connection object
 Set dbConn = Server.CreateObject("ADODB.Connection")

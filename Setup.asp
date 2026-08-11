@@ -47,19 +47,30 @@ If strAction <> "" Then
 
             Dim rsTest
             Set rsTest = Server.CreateObject("ADODB.RecordSet")
+
+            ' Try to open connection without password (Access DB)
             rsTest.Open "SELECT COUNT(*) as cnt FROM Divisions", dbConn
 
-            If Err.Number = 0 And Not (rsTest.BOF And rsTest.EOF) Then
-                strMessage = "<strong style='color:green;'>✓ Database connection successful!</strong><br>" & _
-                    "Found " & rsTest("cnt") & " division(s) in database."
-                bolSuccess = True
+            ' If connection failed, the error will be caught below
+            If Err.Number = 0 Then
+                If Not (rsTest.BOF And rsTest.EOF) Then
+                    strMessage = "<strong style='color:green;'>✓ Database connection successful!</strong><br>" & _
+                        "Found " & rsTest("cnt") & " division(s) in database."
+                    bolSuccess = True
+                    rsTest.Close
+                Else
+                    strMessage = "<strong style='color:red;'>ERROR: Cannot read from database.</strong><br>" & _
+                        "Error: Recordset is empty or connection issue"
+                    bolSuccess = False
+                End If
             Else
                 strMessage = "<strong style='color:red;'>ERROR: Database connection failed.</strong><br>" & _
-                    "Error: " & Err.Description
+                    "Error: " & Err.Description & "<br>" & _
+                    "Ensure database path is correct and Access DB has no password."
                 bolSuccess = False
             End If
 
-            rsTest.Close
+            If Not rsTest Is Nothing Then rsTest.Close
             Set rsTest = Nothing
             Err.Clear
             On Error GoTo 0
